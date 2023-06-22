@@ -6,9 +6,17 @@
 
 // ----------- Variables ------------
 var cookies = 0;
-var x = 200;
-var y = 200;
-var sz = 1;
+
+// ----------- Objects ----------
+// Day 2: Define an object to represent a cookie
+var cookie = {
+    x: 200,
+    y: 200,
+    sz: 1,
+    isTouching: function () {
+        return dist(this.x, this.y, mouseX, mouseY) < 100 * this.sz;
+    },
+};
 
 // ----------- Functions -------------
 // Day 1: Make a function to draw a cookie
@@ -17,7 +25,7 @@ var sz = 1;
  * What parameters should the function have?
  * How can we move the cookie based on the parameters
  */
-var cookie = function (x, y, sz) {
+var drawCookie = function (x, y, sz) {
     noStroke();
 
     // cookie shadow
@@ -42,30 +50,30 @@ var draw = function () {
     background(255, 255, 255);
 
     // Day 1 optional - increase size of cookie when hovered
-    if (dist(x, y, mouseX, mouseY) < 100 * sz) {
-        sz = 1.05;
+    if (cookie.isTouching()) {
+        cookie.sz = 1.05;
     } else {
-        sz = 1;
+        cookie.sz = 1;
     }
 
     fill(0, 0, 0);
     text("Cookies: " + cookies, 20, 30);
 
     // Day 1 - draw the cookie
-    cookie(x, y, sz);
+    drawCookie(cookie.x, cookie.y, cookie.sz);
 };
 
 // Day 1: When you click the cookie, increment a variable
 var mouseClicked = function () {
     // Use dist function to check if the cookie was clicked
-    if (dist(x, y, mouseX, mouseY) < 100 * sz) {
+    if (cookie.isTouching()) {
         cookies += 1;
     }
 };
 
 // Day 1: When you press the spacebar and the mouse is over the cookies -> count as a click
 var keyPressed = function () {
-    if (str(key) === " " && dist(x, y, mouseX, mouseY) < 100 * sz) {
+    if (str(key) === " " && cookie.isTouching()) {
         cookies += 1;
     }
 };
