@@ -7,6 +7,7 @@
 // ----------- Variables ------------
 var cookies = 0;
 var cps = 0; // cookies per second
+var cpc = 1; // cookies per click
 var timeSinceLastAutoUpdate = millis();
 
 // ----------- Objects ----------
@@ -75,13 +76,13 @@ var draw = function () {
 var mouseClicked = function () {
     // Use dist function to check if the cookie was clicked
     if (cookie.isTouching()) {
-        cookies += 1;
+        cookies += cpc;
     }
 };
 
 // Day 1: When you press the spacebar and the mouse is over the cookies -> count as a click
 var keyPressed = function () {
     if (str(key) === " " && cookie.isTouching()) {
-        cookies += 1;
+        cookies += cpc;
     }
 };
