@@ -6,6 +6,8 @@
 
 // ----------- Variables ------------
 var cookies = 0;
+var cps = 0; // cookies per second
+var timeSinceLastAutoUpdate = millis();
 
 // ----------- Objects ----------
 // Day 2: Define an object to represent a cookie
@@ -61,6 +63,12 @@ var draw = function () {
 
     // Day 1 - draw the cookie
     drawCookie(cookie.x, cookie.y, cookie.sz);
+
+    // Day 2 - Automatically add cookies per second
+    if (millis() - timeSinceLastAutoUpdate > 1000) {
+        cookies += cps;
+        timeSinceLastAutoUpdate = millis();
+    }
 };
 
 // Day 1: When you click the cookie, increment a variable
