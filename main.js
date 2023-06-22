@@ -23,13 +23,17 @@ var cookie = {
 
 // Day 3: Define an object template to represent an building you can buy in the shop
 /**
- * Cost is an integer (fixed number of cookies)
+ * name is a string
+ * label is a string
+ * cost is an integer - the fixed number of cookies necessary to buy the building
  * action is a function that represents what the upgrade actually does
  *  it is run once when the upgrade is purchased
  */
 
-var Building = function (cost, action) {
-    this.cost = 0;
+var Building = function (name, label, cost, action) {
+    this.name = name;
+    this.label = label;
+    this.cost = cost;
     this.action = action;
     this.numPurchased = 0;
 };
@@ -65,6 +69,25 @@ var drawCookie = function (x, y, sz) {
     ellipse(x + 28 * sz, y - 63 * sz, 22 * sz, 22 * sz);
     ellipse(x - 38 * sz, y - 26 * sz, 35 * sz, 35 * sz);
 };
+
+// ----------- Instances --------------
+// Day 3 - Create instances of Building object
+var clicker = new Building(
+    "clicker",
+    "Increase cookies per click by 1",
+    15,
+    function () {
+        cpc += 1;
+    }
+);
+var grandma = new Building(
+    "grandma",
+    "Increase cookies per second by 8",
+    100,
+    function () {
+        cps += 8;
+    }
+);
 
 // ----------- Built Ins --------------
 var draw = function () {
