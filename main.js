@@ -21,6 +21,24 @@ var cookie = {
     },
 };
 
+// Day 3: Define an object template to represent an building you can buy in the shop
+/**
+ * Cost is an integer (fixed number of cookies)
+ * action is a function that represents what the upgrade actually does
+ *  it is run once when the upgrade is purchased
+ */
+
+var Building = function (cost, action) {
+    this.cost = 0;
+    this.action = action;
+    this.numPurchased = 0;
+};
+Building.prototype.purchase = function () {
+    cookies -= this.cost;
+    this.action();
+    this.numPurchased += 1;
+};
+
 // ----------- Functions -------------
 // Day 1: Make a function to draw a cookie
 /**
