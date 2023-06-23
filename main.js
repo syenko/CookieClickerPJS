@@ -116,6 +116,19 @@ var grandma = new Building(
     }
 );
 
+// Day 4 - Create instances of Button object
+var clickerButton = new Button({
+    x: 20,
+    y: 20,
+    label: "Clicker (CPC +1)",
+});
+
+var grandmaButton = new Button({
+    x: 40,
+    y: 40,
+    label: "Grandma (CPS +8)",
+});
+
 // ----------- Built Ins --------------
 var draw = function () {
     background(255, 255, 255);
@@ -133,6 +146,10 @@ var draw = function () {
     // Day 1 - draw the cookie
     drawCookie(cookie.x, cookie.y, cookie.sz);
 
+    // Day 4 - Draw buttons
+    clickerButton.draw();
+    grandmaButton.draw();
+
     // Day 2 - Automatically add cookies per second
     if (millis() - timeSinceLastAutoUpdate > 1000) {
         cookies += cps;
@@ -145,6 +162,13 @@ var mouseClicked = function () {
     // Use dist function to check if the cookie was clicked
     if (cookie.isTouching()) {
         cookies += cpc;
+    }
+
+    // Day 4 - check if buttons are clicked -> buy upgrade
+    if (clickerButton.isMouseInside()) {
+        clicker.purchase();
+    } else if (grandmaButton.isMouseInside()) {
+        grandma.purchase();
     }
 };
 
