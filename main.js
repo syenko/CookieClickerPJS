@@ -25,8 +25,8 @@ var cookie = {
 var Button = function (config) {
     this.x = config.x;
     this.y = config.y;
-    this.width = config.width || 70;
-    this.height = config.height || 60;
+    this.width = config.width || 85;
+    this.height = config.height || 75;
     this.label = config.label;
 };
 // draws the button
@@ -36,7 +36,7 @@ Button.prototype.draw = function () {
     fill(0, 0, 0);
     textSize(12);
     textAlign(LEFT, TOP);
-    text(this.label, this.x + 10, this.y + this.height / 4);
+    text(this.label, this.x + 10, this.y + 10);
 };
 // Returns a boolean - whether or not the mouse is inside the function
 Button.prototype.isMouseInside = function () {
@@ -55,20 +55,49 @@ Button.prototype.isMouseInside = function () {
  * cost is an integer - the fixed number of cookies necessary to buy the building
  * action is a function that represents what the upgrade actually does
  *  it is run once when the upgrade is purchased
+ * buttonX, buttonY are integers
  */
 
-var Building = function (name, label, cost, action) {
+var Building = function (name, label, cost, action, buttonX, buttonY) {
     this.name = name;
     this.label = label;
     this.cost = cost;
     this.action = action;
     this.numPurchased = 0;
+
+    // Day 4 - Add button
+    this.button = new Button({
+        x: buttonX,
+        y: buttonY,
+        label:
+            this.name +
+            "\n(" +
+            this.cost +
+            " cookies)" +
+            "\n" +
+            this.label +
+            "\n" +
+            "Count: " +
+            this.numPurchased,
+    });
 };
 Building.prototype.purchase = function () {
     if (cookies >= this.cost) {
         cookies -= this.cost;
         this.action();
         this.numPurchased += 1;
+
+        // Day 4 - update button label
+        this.button.label =
+            this.name +
+            "\n(" +
+            this.cost +
+            " cookies)" +
+            "\n" +
+            this.label +
+            "\n" +
+            "Count: " +
+            this.numPurchased;
     }
 };
 
@@ -103,33 +132,24 @@ var drawCookie = function (x, y, sz) {
 // Day 3 - Create instances of Building object
 var clicker = new Building(
     "clicker",
-    "Increase cookies per click by 1",
+    "CPC +1",
     15,
     function () {
         cpc += 1;
-    }
+    },
+    10,
+    55
 );
 var grandma = new Building(
     "grandma",
-    "Increase cookies per second by 8",
+    "CPS +8",
     100,
     function () {
         cps += 8;
-    }
+    },
+    10,
+    135
 );
-
-// Day 4 - Create instances of Button object
-var clickerButton = new Button({
-    x: 20,
-    y: 64,
-    label: "Clicker\n(CPC +1)",
-});
-
-var grandmaButton = new Button({
-    x: 20,
-    y: 140,
-    label: "Grandma\n(CPS +8)",
-});
 
 // ----------- Built Ins --------------
 var draw = function () {
@@ -149,8 +169,8 @@ var draw = function () {
     drawCookie(cookie.x, cookie.y, cookie.sz);
 
     // Day 4 - Draw buttons
-    clickerButton.draw();
-    grandmaButton.draw();
+    clicker.button.draw();
+    grandma.button.draw();
 
     // Day 2 - Automatically add cookies per second
     if (millis() - timeSinceLastAutoUpdate > 1000) {
@@ -167,9 +187,9 @@ var mouseClicked = function () {
     }
 
     // Day 4 - check if buttons are clicked -> buy upgrade
-    if (clickerButton.isMouseInside()) {
+    if (clicker.button.isMouseInside()) {
         clicker.purchase();
-    } else if (grandmaButton.isMouseInside()) {
+    } else if (grandma.button.isMouseInside()) {
         grandma.purchase();
     }
 };
