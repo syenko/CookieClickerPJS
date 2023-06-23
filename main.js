@@ -156,7 +156,10 @@ var draw = function () {
     background(255, 255, 255);
 
     // Day 1 optional - decrease size of cookie when mouse is pressed
-    if (mouseIsPressed && cookie.isTouching()) {
+    if (
+        (mouseIsPressed || (keyIsPressed && str(key) === " ")) &&
+        cookie.isTouching()
+    ) {
         cookie.sz = 0.95;
     } else {
         cookie.sz = 1;
