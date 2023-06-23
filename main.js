@@ -13,8 +13,8 @@ var timeSinceLastAutoUpdate = millis();
 // ----------- Objects ----------
 // Day 2: Define an object to represent a cookie
 var cookie = {
-    x: 200,
-    y: 200,
+    x: 300,
+    y: 300,
     sz: 1,
     isTouching: function () {
         return dist(this.x, this.y, mouseX, mouseY) < 100 * this.sz;
@@ -137,7 +137,7 @@ var clicker = new Building(
     function () {
         cpc += 1;
     },
-    10,
+    20,
     55
 );
 var grandma = new Building(
@@ -147,7 +147,7 @@ var grandma = new Building(
     function () {
         cps += 8;
     },
-    10,
+    20,
     135
 );
 
