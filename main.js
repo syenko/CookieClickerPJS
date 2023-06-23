@@ -25,18 +25,18 @@ var cookie = {
 var Button = function (config) {
     this.x = config.x;
     this.y = config.y;
-    this.width = config.width || 50;
-    this.height = config.height || 50;
+    this.width = config.width || 70;
+    this.height = config.height || 60;
     this.label = config.label;
 };
 // draws the button
 Button.prototype.draw = function () {
-    fill(255, 255, 255);
+    fill(150, 220, 255);
     rect(this.x, this.y, this.width, this.height, 5);
     fill(0, 0, 0);
-    textSize(15);
+    textSize(12);
     textAlign(LEFT, TOP);
-    text(this.label, this.x + 10, this.height / 4);
+    text(this.label, this.x + 10, this.y + this.height / 4);
 };
 // Returns a boolean - whether or not the mouse is inside the function
 Button.prototype.isMouseInside = function () {
@@ -65,9 +65,11 @@ var Building = function (name, label, cost, action) {
     this.numPurchased = 0;
 };
 Building.prototype.purchase = function () {
-    cookies -= this.cost;
-    this.action();
-    this.numPurchased += 1;
+    if (cookies >= this.cost) {
+        cookies -= this.cost;
+        this.action();
+        this.numPurchased += 1;
+    }
 };
 
 // ----------- Functions -------------
@@ -119,14 +121,14 @@ var grandma = new Building(
 // Day 4 - Create instances of Button object
 var clickerButton = new Button({
     x: 20,
-    y: 20,
-    label: "Clicker (CPC +1)",
+    y: 64,
+    label: "Clicker\n(CPC +1)",
 });
 
 var grandmaButton = new Button({
-    x: 40,
-    y: 40,
-    label: "Grandma (CPS +8)",
+    x: 20,
+    y: 140,
+    label: "Grandma\n(CPS +8)",
 });
 
 // ----------- Built Ins --------------
