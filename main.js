@@ -21,6 +21,33 @@ var cookie = {
     },
 };
 
+// Day 4: Define Button object
+var Button = function (config) {
+    this.x = config.x;
+    this.y = config.y;
+    this.width = config.width || 50;
+    this.height = config.height || 50;
+    this.label = config.label;
+};
+// draws the button
+Button.prototype.draw = function () {
+    fill(255, 255, 255);
+    rect(this.x, this.y, this.width, this.height, 5);
+    fill(0, 0, 0);
+    textSize(15);
+    textAlign(LEFT, TOP);
+    text(this.label, this.x + 10, this.height / 4);
+};
+// Returns a boolean - whether or not the mouse is inside the function
+Button.prototype.isMouseInside = function () {
+    return (
+        mouseX <= this.x + this.width &&
+        mouseX >= this.x &&
+        mouseY <= this.y + this.height &&
+        mouseY >= this.y
+    );
+};
+
 // Day 3: Define an object template to represent an building you can buy in the shop
 /**
  * name is a string
