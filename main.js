@@ -5,6 +5,7 @@
 **/
 
 // ----------- Variables ------------
+var currentScene = 0;
 var cookies = 0;
 var cps = 0; // cookies per second
 var cpc = 1; // cookies per click
@@ -159,52 +160,74 @@ var buildings = [
 var draw = function () {
     background(255, 255, 255);
 
-    // Day 1 optional - decrease size of cookie when mouse is pressed
-    if (
-        (mouseIsPressed || (keyIsPressed && str(key) === " ")) &&
-        cookie.isTouching()
-    ) {
-        cookie.sz = 0.95;
-    } else {
-        cookie.sz = 1;
+    // Day 6 - Add start scene
+    if (currentScene === 0) {
+        drawCookie(300, 300, 1.7);
+
+        fill(255, 255, 255);
+        textSize(40);
+        textAlign(CENTER, CENTER);
+        text("Cookie clicker!", 300, 275);
+        textSize(20);
+        text("Click to start", 300, 350);
     }
+    // Day 6 - cookie game scene
+    else if (currentScene === 1) {
+        // Day 1 optional - decrease size of cookie when mouse is pressed
+        if (
+            (mouseIsPressed || (keyIsPressed && str(key) === " ")) &&
+            cookie.isTouching()
+        ) {
+            cookie.sz = 0.95;
+        } else {
+            cookie.sz = 1;
+        }
 
-    fill(0, 0, 0);
-    text("Cookies: " + cookies, 20, 30);
+        fill(0, 0, 0);
+        text("Cookies: " + cookies, 20, 30);
 
-    // Day 1 - draw the cookie
-    drawCookie(cookie.x, cookie.y, cookie.sz);
+        // Day 1 - draw the cookie
+        drawCookie(cookie.x, cookie.y, cookie.sz);
 
-    // Day 5 - Draw buttons with array!
-    for (var i = 0; i < buildings.length; i++) {
-        buildings[i].draw();
-    }
+        // Day 5 - Draw buttons with array!
+        for (var i = 0; i < buildings.length; i++) {
+            buildings[i].button.draw();
+        }
 
-    // Day 2 - Automatically add cookies per second
-    if (millis() - timeSinceLastAutoUpdate > 1000) {
-        cookies += cps;
-        timeSinceLastAutoUpdate = millis();
+        // Day 2 - Automatically add cookies per second
+        if (millis() - timeSinceLastAutoUpdate > 1000) {
+            cookies += cps;
+            timeSinceLastAutoUpdate = millis();
+        }
     }
 };
 
 // Day 1: When you click the cookie, increment a variable
 var mouseClicked = function () {
-    // Use dist function to check if the cookie was clicked
-    if (cookie.isTouching()) {
-        cookies += cpc;
-    }
+    // Day 6 - Add scene switch on click
+    if (currentScene === 0) {
+        currentScene += 1;
+    } else if (currentScene === 1) {
+        // Use dist function to check if the cookie was clicked
+        if (cookie.isTouching()) {
+            cookies += cpc;
+        }
 
-    // Day 5 - check if buttons are clicked -> buy upgrade (with arrays)
-    for (var i = 0; i < buildings.length; i++) {
-        if (building[i].button.isMouseInside()) {
-            buildings[i].purchase();
+        // Day 5 - check if buttons are clicked -> buy upgrade (with arrays)
+        for (var i = 0; i < buildings.length; i++) {
+            if (buildings[i].button.isMouseInside()) {
+                buildings[i].purchase();
+            }
         }
     }
 };
 
 // Day 1: When you press the spacebar and the mouse is over the cookies -> count as a click
 var keyPressed = function () {
-    if (str(key) === " " && cookie.isTouching()) {
-        cookies += cpc;
+    // Day 6 - Only check when on game scene
+    if (currentScene === 1) {
+        if (str(key) === " " && cookie.isTouching()) {
+            cookies += cpc;
+        }
     }
 };
