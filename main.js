@@ -129,27 +129,31 @@ var drawCookie = function (x, y, sz) {
 };
 
 // ----------- Instances --------------
-// Day 3 - Create instances of Building object
-var clicker = new Building(
-    "clicker",
-    "CPC +1",
-    15,
-    function () {
-        cpc += 1;
-    },
-    20,
-    55
-);
-var grandma = new Building(
-    "grandma",
-    "CPS +8",
-    100,
-    function () {
-        cps += 8;
-    },
-    20,
-    135
-);
+// Day 5 - Create array of Buildings
+var buildings = [
+    // clicker
+    new Building(
+        "clicker",
+        "CPC +1",
+        15,
+        function () {
+            cpc += 1;
+        },
+        20,
+        55
+    ),
+    // grandma
+    new Building(
+        "grandma",
+        "CPS +8",
+        100,
+        function () {
+            cps += 8;
+        },
+        20,
+        135
+    ),
+];
 
 // ----------- Built Ins --------------
 var draw = function () {
@@ -171,9 +175,10 @@ var draw = function () {
     // Day 1 - draw the cookie
     drawCookie(cookie.x, cookie.y, cookie.sz);
 
-    // Day 4 - Draw buttons
-    clicker.button.draw();
-    grandma.button.draw();
+    // Day 5 - Draw buttons with array!
+    for (var i = 0; i < buildings.length; i++) {
+        buildings[i].draw();
+    }
 
     // Day 2 - Automatically add cookies per second
     if (millis() - timeSinceLastAutoUpdate > 1000) {
@@ -189,11 +194,11 @@ var mouseClicked = function () {
         cookies += cpc;
     }
 
-    // Day 4 - check if buttons are clicked -> buy upgrade
-    if (clicker.button.isMouseInside()) {
-        clicker.purchase();
-    } else if (grandma.button.isMouseInside()) {
-        grandma.purchase();
+    // Day 5 - check if buttons are clicked -> buy upgrade (with arrays)
+    for (var i = 0; i < buildings.length; i++) {
+        if (building[i].button.isMouseInside()) {
+            buildings[i].purchase();
+        }
     }
 };
 
