@@ -49,17 +49,17 @@ Button.prototype.isMouseInside = function () {
     );
 };
 
-// Day 3: Define an object template to represent an building you can buy in the shop
+// Day 3: Define an object template to represent an StoreItem you can buy in the shop
 /**
  * name is a string
  * label is a string
- * cost is an integer - the fixed number of cookies necessary to buy the building
- * action is a function that represents what the upgrade actually does
- *  it is run once when the upgrade is purchased
+ * cost is an integer - the fixed number of cookies necessary to buy the storeitem
+ * action is a function that represents what the storeitem actually does
+ *  it is run once when the storeitem is purchased
  * buttonX, buttonY are integers
  */
 
-var Building = function (name, label, cost, action, buttonX, buttonY) {
+var StoreItem = function (name, label, cost, action, buttonX, buttonY) {
     this.name = name;
     this.label = label;
     this.cost = cost;
@@ -82,7 +82,7 @@ var Building = function (name, label, cost, action, buttonX, buttonY) {
             this.numPurchased,
     });
 };
-Building.prototype.purchase = function () {
+StoreItem.prototype.purchase = function () {
     if (cookies >= this.cost) {
         cookies -= this.cost;
         this.action();
@@ -130,10 +130,10 @@ var drawCookie = function (x, y, sz) {
 };
 
 // ----------- Instances --------------
-// Day 5 - Create array of Buildings
-var buildings = [
+// Day 5 - Create array of StoreItems
+var storeItems = [
     // clicker
-    new Building(
+    new StoreItem(
         "clicker",
         "CPC +1",
         15,
@@ -144,7 +144,7 @@ var buildings = [
         55
     ),
     // grandma
-    new Building(
+    new StoreItem(
         "grandma",
         "CPS +8",
         100,
@@ -190,8 +190,8 @@ var draw = function () {
         drawCookie(cookie.x, cookie.y, cookie.sz);
 
         // Day 5 - Draw buttons with array!
-        for (var i = 0; i < buildings.length; i++) {
-            buildings[i].button.draw();
+        for (var i = 0; i < storeItems.length; i++) {
+            storeItems[i].button.draw();
         }
 
         // Day 2 - Automatically add cookies per second
@@ -213,10 +213,10 @@ var mouseClicked = function () {
             cookies += cpc;
         }
 
-        // Day 5 - check if buttons are clicked -> buy upgrade (with arrays)
-        for (var i = 0; i < buildings.length; i++) {
-            if (buildings[i].button.isMouseInside()) {
-                buildings[i].purchase();
+        // Day 5 - check if buttons are clicked -> buy store item (with arrays)
+        for (var i = 0; i < storeItems.length; i++) {
+            if (storeItems[i].button.isMouseInside()) {
+                storeItems[i].purchase();
             }
         }
     }
