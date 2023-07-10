@@ -173,7 +173,7 @@ var draw = function () {
     }
     // Day 6 - cookie game scene
     else if (currentScene === 1) {
-        // Day 1 optional - decrease size of cookie when mouse is pressed
+        // Day 1 optional - decrease size of cookie when mouse or key is pressed
         if (
             (mouseIsPressed || (keyIsPressed && str(key) === " ")) &&
             cookie.isTouching()
