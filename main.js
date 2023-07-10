@@ -6,9 +6,6 @@
 
 // ----------- Variables ------------
 var currentScene = 0;
-var cookies = 0;
-var cps = 0; // cookies per second
-var cpc = 1; // cookies per click
 var timeSinceLastAutoUpdate = millis();
 
 // ----------- Objects ----------
@@ -20,6 +17,9 @@ var cookie = {
     isTouching: function () {
         return dist(this.x, this.y, mouseX, mouseY) < 100 * this.sz;
     },
+    cookies: 0,
+    cps: 0, // cookies per second
+    cpc: 1, // cookies per click
 };
 
 // Day 4: Define Button object
@@ -83,8 +83,8 @@ var StoreItem = function (name, label, cost, action, buttonX, buttonY) {
     });
 };
 StoreItem.prototype.purchase = function () {
-    if (cookies >= this.cost) {
-        cookies -= this.cost;
+    if (cookie.cookies >= this.cost) {
+        cookie.cookies -= this.cost;
         this.action();
         this.numPurchased += 1;
 
@@ -138,7 +138,7 @@ var storeItems = [
         "CPC +1",
         15,
         function () {
-            cpc += 1;
+            cookie.cpc += 1;
         },
         20,
         55
@@ -149,7 +149,7 @@ var storeItems = [
         "CPS +8",
         100,
         function () {
-            cps += 8;
+            cookie.cps += 8;
         },
         20,
         135
@@ -184,7 +184,7 @@ var draw = function () {
         }
 
         fill(0, 0, 0);
-        text("Cookies: " + cookies, 20, 30);
+        text("Cookies: " + cookie.cookies, 20, 30);
 
         // Day 1 - draw the cookie
         drawCookie(cookie.x, cookie.y, cookie.sz);
@@ -196,7 +196,7 @@ var draw = function () {
 
         // Day 2 - Automatically add cookies per second
         if (millis() - timeSinceLastAutoUpdate > 1000) {
-            cookies += cps;
+            cookie.cookies += cookie.cps;
             timeSinceLastAutoUpdate = millis();
         }
     }
@@ -210,7 +210,7 @@ var mouseClicked = function () {
     } else if (currentScene === 1) {
         // Use dist function to check if the cookie was clicked
         if (cookie.isTouching()) {
-            cookies += cpc;
+            cookie.cookies += cookie.cpc;
         }
 
         // Day 5 - check if buttons are clicked -> buy store item (with arrays)
@@ -227,7 +227,7 @@ var keyPressed = function () {
     // Day 6 - Only check when on game scene
     if (currentScene === 1) {
         if (str(key) === " " && cookie.isTouching()) {
-            cookies += cpc;
+            cookie.cookies += cookie.cpc;
         }
     }
 };
