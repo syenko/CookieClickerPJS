@@ -1,15 +1,25 @@
 /**
 
-    Cookie Clicker - Lesson 1
+    Cookie Clicker
 
 **/
 
 // ----------- Variables ------------
-var cookies = 0;
-var cpc = 1; // cookies per click
-var x = 300;
-var y = 300;
-var sz = 1;
+var timeSinceLastAutoUpdate = millis();
+
+// ----------- Objects ----------
+// Day 2: Define an object to represent a cookie
+var cookie = {
+    x: 300,
+    y: 300,
+    sz: 1,
+    isTouching: function () {
+        return dist(this.x, this.y, mouseX, mouseY) < 100 * this.sz;
+    },
+    cookies: 0,
+    cps: 0, // cookies per second
+    cpc: 1, // cookies per click
+};
 
 // ----------- Functions -------------
 // Day 1: Make a function to draw a cookie
@@ -18,7 +28,7 @@ var sz = 1;
  * What parameters should the function have?
  * How can we move the cookie based on the parameters
  */
-var cookie = function (x, y, sz) {
+var drawCookie = function (x, y, sz) {
     noStroke();
 
     // cookie shadow
@@ -43,30 +53,36 @@ var draw = function () {
     background(255, 255, 255);
 
     // Day 1 optional - decrease size of cookie when mouse is pressed
-    if (mouseIsPressed && dist(x, y, mouseX, mouseY) < 100 * sz) {
-        sz = 0.95;
+    if (mouseIsPressed && cookie.isTouching()) {
+        cookie.sz = 0.95;
     } else {
-        sz = 1;
+        cookie.sz = 1;
     }
 
     fill(0, 0, 0);
-    text("Cookies: " + cookies, 20, 30);
+    text("Cookies: " + cookie.cookies, 20, 30);
 
     // Day 1 - draw the cookie
-    cookie(x, y, sz);
+    drawCookie(cookie.x, cookie.y, cookie.sz);
+
+    // Day 2 - Automatically add cookies per second
+    if (millis() - timeSinceLastAutoUpdate > 1000) {
+        cookie.cookies += cookie.cps;
+        timeSinceLastAutoUpdate = millis();
+    }
 };
 
 // Day 1: When you click the cookie, increment a variable
 var mouseClicked = function () {
     // Use dist function to check if the cookie was clicked
-    if (dist(x, y, mouseX, mouseY) < 100 * sz) {
-        cookies += cpc;
+    if (cookie.isTouching()) {
+        cookie.cookies += cookie.cpc;
     }
 };
 
 // Day 1: When you press the spacebar and the mouse is over the cookies -> count as a click
 var keyPressed = function () {
-    if (str(key) === " " && dist(x, y, mouseX, mouseY) < 100 * sz) {
-        cookies += cpc;
+    if (str(key) === " " && cookie.isTouching()) {
+        cookie.cookies += cookie.cpc;
     }
 };
