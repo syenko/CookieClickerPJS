@@ -1,6 +1,6 @@
 /**
 
-    Cookie Clicker - Lesson 2
+    Cookie Clicker - Lesson 3
 
 **/
 
@@ -19,6 +19,31 @@ var cookie = {
     cookies: 0,
     cps: 0, // cookies per second
     cpc: 1, // cookies per click
+};
+
+// Day 3: Define an object template to represent an StoreItem you can buy in the shop
+/**
+ * name is a string
+ * label is a string
+ * cost is an integer - the fixed number of cookies necessary to buy the storeitem
+ * action is a function that represents what the storeitem actually does
+ *  it is run once when the storeitem is purchased
+ * buttonX, buttonY are integers
+ */
+
+var StoreItem = function (name, label, cost, action, buttonX, buttonY) {
+    this.name = name;
+    this.label = label;
+    this.cost = cost;
+    this.action = action;
+    this.numPurchased = 0;
+};
+StoreItem.prototype.purchase = function () {
+    if (cookie.cookies >= this.cost) {
+        cookie.cookies -= this.cost;
+        this.action();
+        this.numPurchased += 1;
+    }
 };
 
 // ----------- Functions -------------
@@ -47,6 +72,25 @@ var drawCookie = function (x, y, sz) {
     ellipse(x + 28 * sz, y - 63 * sz, 22 * sz, 22 * sz);
     ellipse(x - 38 * sz, y - 26 * sz, 35 * sz, 35 * sz);
 };
+
+// ----------- Instances --------------
+// Day 3 - Create instances of StoreItem object
+var clicker = new StoreItem(
+    "clicker",
+    "Increase cookies per click by 1",
+    15,
+    function () {
+        cookie.cpc += 1;
+    }
+);
+var grandma = new StoreItem(
+    "grandma",
+    "Increase cookies per second by 8",
+    100,
+    function () {
+        cookie.cps += 8;
+    }
+);
 
 // ----------- Built Ins --------------
 var draw = function () {
