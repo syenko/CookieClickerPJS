@@ -1,6 +1,8 @@
 /**
 
-    Cookie Clicker - Lesson 3
+    Cookie Clicker - Lesson 4A
+
+    BEFORE buttons are added to StoreItem
 
 **/
 
@@ -19,6 +21,33 @@ var cookie = {
     cookies: 0,
     cps: 0, // cookies per second
     cpc: 1, // cookies per click
+};
+
+// Day 4: Define Button object
+var Button = function (config) {
+    this.x = config.x;
+    this.y = config.y;
+    this.width = config.width || 85;
+    this.height = config.height || 75;
+    this.label = config.label;
+};
+// draws the button
+Button.prototype.draw = function () {
+    fill(150, 220, 255);
+    rect(this.x, this.y, this.width, this.height, 5);
+    fill(0, 0, 0);
+    textSize(12);
+    textAlign(LEFT, TOP);
+    text(this.label, this.x + 10, this.y + 10);
+};
+// Returns a boolean - whether or not the mouse is inside the function
+Button.prototype.isMouseInside = function () {
+    return (
+        mouseX <= this.x + this.width &&
+        mouseX >= this.x &&
+        mouseY <= this.y + this.height &&
+        mouseY >= this.y
+    );
 };
 
 // Day 3: Define an object template to represent an StoreItem you can buy in the shop
@@ -74,22 +103,25 @@ var drawCookie = function (x, y, sz) {
 
 // ----------- Instances --------------
 // Day 3 - Create instances of StoreItem object
-var clicker = new StoreItem(
-    "clicker",
-    "Increase cookies per click by 1",
-    15,
-    function () {
-        cookie.cpc += 1;
-    }
-);
-var grandma = new StoreItem(
-    "grandma",
-    "Increase cookies per second by 8",
-    100,
-    function () {
-        cookie.cps += 8;
-    }
-);
+var clicker = new StoreItem("clicker", "CPC +1", 15, function () {
+    cookie.cpc += 1;
+});
+var grandma = new StoreItem("grandma", "CPS +8", 100, function () {
+    cookie.cps += 8;
+});
+
+// Day 4 - Create instances of Button object
+var clickerButton = new Button({
+    x: 20,
+    y: 64,
+    label: "Clicker\n(CPC +1)",
+});
+
+var grandmaButton = new Button({
+    x: 20,
+    y: 140,
+    label: "Grandma\n(CPS +8)",
+});
 
 // ----------- Built Ins --------------
 var draw = function () {
@@ -111,6 +143,10 @@ var draw = function () {
     // Day 1 - draw the cookie
     drawCookie(cookie.x, cookie.y, cookie.sz);
 
+    // Day 4 - Draw buttons
+    clickerButton.draw();
+    grandmaButton.draw();
+
     // Day 2 - Automatically add cookies per second
     if (millis() - timeSinceLastAutoUpdate > 1000) {
         cookie.cookies += cookie.cps;
@@ -123,6 +159,13 @@ var mouseClicked = function () {
     // Use dist function to check if the cookie was clicked
     if (cookie.isTouching()) {
         cookie.cookies += cookie.cpc;
+    }
+
+    // Day 4 - check if buttons are clicked -> buy upgrade
+    if (clickerButton.isMouseInside()) {
+        clicker.purchase();
+    } else if (grandmaButton.isMouseInside()) {
+        grandma.purchase();
     }
 };
 
