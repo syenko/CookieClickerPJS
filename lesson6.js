@@ -1,6 +1,6 @@
 /**
 
-    Cookie Clicker
+    Cookie Clicker - Lesson 6 / Final
 
 **/
 
