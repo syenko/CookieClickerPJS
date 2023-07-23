@@ -18,7 +18,7 @@ var sz = 1;
  * What parameters should the function have?
  * How can we move the cookie based on the parameters
  */
-var cookie = function (x, y, sz) {
+var drawCookie = function (x, y, sz) {
     noStroke();
 
     // cookie shadow
@@ -56,7 +56,7 @@ var draw = function () {
     text("Cookies: " + cookies, 20, 30);
 
     // Day 1 - draw the cookie
-    cookie(x, y, sz);
+    drawCookie(x, y, sz);
 };
 
 // Day 1: When you click the cookie, increment a variable
