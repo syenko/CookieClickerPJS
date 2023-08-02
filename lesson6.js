@@ -22,13 +22,12 @@ var cookie = {
     cpc: 1, // cookies per click
 };
 
-// Day 4: Define Button object
-var Button = function (config) {
-    this.x = config.x;
-    this.y = config.y;
-    this.width = config.width || 85;
-    this.height = config.height || 75;
-    this.label = config.label;
+var Button = function (x, y, width, height, label) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+    this.label = label;
 };
 // draws the button
 Button.prototype.draw = function () {
@@ -56,49 +55,20 @@ Button.prototype.isMouseInside = function () {
  * cost is an integer - the fixed number of cookies necessary to buy the storeitem
  * action is a function that represents what the storeitem actually does
  *  it is run once when the storeitem is purchased
- * buttonX, buttonY are integers
  */
 
-var StoreItem = function (name, label, cost, action, buttonX, buttonY) {
+var StoreItem = function (name, label, cost, action) {
     this.name = name;
     this.label = label;
     this.cost = cost;
     this.action = action;
     this.numPurchased = 0;
-
-    // Day 4 - Add button
-    this.button = new Button({
-        x: buttonX,
-        y: buttonY,
-        label:
-            this.name +
-            "\n(" +
-            this.cost +
-            " cookies)" +
-            "\n" +
-            this.label +
-            "\n" +
-            "Count: " +
-            this.numPurchased,
-    });
 };
 StoreItem.prototype.purchase = function () {
     if (cookie.cookies >= this.cost) {
         cookie.cookies -= this.cost;
         this.action();
         this.numPurchased += 1;
-
-        // Day 4 - update button label
-        this.button.label =
-            this.name +
-            "\n(" +
-            this.cost +
-            " cookies)" +
-            "\n" +
-            this.label +
-            "\n" +
-            "Count: " +
-            this.numPurchased;
     }
 };
 
@@ -130,31 +100,20 @@ var drawCookie = function (x, y, sz) {
 };
 
 // ----------- Instances --------------
-// Day 5 - Create array of StoreItems
-var storeItems = [
-    // clicker
-    new StoreItem(
-        "clicker",
-        "CPC +1",
-        15,
-        function () {
-            cookie.cpc += 1;
-        },
-        20,
-        55
-    ),
-    // grandma
-    new StoreItem(
-        "grandma",
-        "CPS +8",
-        100,
-        function () {
-            cookie.cps += 8;
-        },
-        20,
-        135
-    ),
-];
+// Day 3 - Create instances of StoreItem object
+var clicker = new StoreItem("clicker", "CPC +1", 15, function () {
+    cookie.cpc += 1;
+});
+var grandma = new StoreItem("grandma", "CPS +8", 100, function () {
+    cookie.cps += 8;
+});
+
+// Day 4 - Create instances of Button object
+var clickerButton = new Button(20, 64, 85, 75, "Clicker\n(CPC +1)");
+var grandmaButton = new Button(20, 140, 85, 75, "Grandma\n(CPS +8)");
+
+// Day 5 - Create array of Buttons
+var buttons = [clickerButton, grandmaButton];
 
 // ----------- Built Ins --------------
 var draw = function () {
@@ -173,7 +132,7 @@ var draw = function () {
     }
     // Day 6 - cookie game scene
     else if (currentScene === 1) {
-        // Day 1 optional - decrease size of cookie when mouse or key is pressed
+        // Day 2: decrease size of cookie when mouse or key is pressed
         if (
             (mouseIsPressed || (keyIsPressed && str(key) === " ")) &&
             cookie.isTouching()
@@ -213,11 +172,11 @@ var mouseClicked = function () {
             cookie.cookies += cookie.cpc;
         }
 
-        // Day 5 - check if buttons are clicked -> buy store item (with arrays)
-        for (var i = 0; i < storeItems.length; i++) {
-            if (storeItems[i].button.isMouseInside()) {
-                storeItems[i].purchase();
-            }
+        // Day 4 - check if buttons are clicked -> buy upgrade
+        if (clickerButton.isMouseInside()) {
+            clicker.purchase();
+        } else if (grandmaButton.isMouseInside()) {
+            grandma.purchase();
         }
     }
 };

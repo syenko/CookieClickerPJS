@@ -118,7 +118,7 @@ var buttons = [clickerButton, grandmaButton];
 var draw = function () {
     background(255, 255, 255);
 
-    // Day 1 optional - decrease size of cookie when mouse or key is pressed
+    // Day 2: decrease size of cookie when mouse or key is pressed
     if (
         (mouseIsPressed || (keyIsPressed && str(key) === " ")) &&
         cookie.isTouching()

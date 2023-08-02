@@ -110,14 +110,13 @@ var grandma = new StoreItem("grandma", "CPS +8", 100, function () {
 
 // Day 4 - Create instances of Button object
 var clickerButton = new Button(20, 64, 85, 75, "Clicker\n(CPC +1)");
-
 var grandmaButton = new Button(20, 140, 85, 75, "Grandma\n(CPS +8)");
 
 // ----------- Built Ins --------------
 var draw = function () {
     background(255, 255, 255);
 
-    // Day 1 optional - decrease size of cookie when mouse or key is pressed
+    // Day 2: decrease size of cookie when mouse or key is pressed
     if (
         (mouseIsPressed || (keyIsPressed && str(key) === " ")) &&
         cookie.isTouching()
