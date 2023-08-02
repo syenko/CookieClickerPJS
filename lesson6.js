@@ -149,8 +149,8 @@ var draw = function () {
         drawCookie(cookie.x, cookie.y, cookie.sz);
 
         // Day 5 - Draw buttons with array!
-        for (var i = 0; i < storeItems.length; i++) {
-            storeItems[i].button.draw();
+        for (var i = 0; i < buttons.length; i++) {
+            buttons[i].draw();
         }
 
         // Day 2 - Automatically add cookies per second
