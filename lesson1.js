@@ -42,16 +42,6 @@ var drawCookie = function (x, y, sz) {
 var draw = function () {
     background(255, 255, 255);
 
-    // Day 1 optional - decrease size of cookie when mouse or key is pressed
-    if (
-        (mouseIsPressed || (keyIsPressed && str(key) === " ")) &&
-        dist(x, y, mouseX, mouseY) < 100 * sz
-    ) {
-        sz = 0.95;
-    } else {
-        sz = 1;
-    }
-
     fill(0, 0, 0);
     text("Cookies: " + cookies, 20, 30);
 
