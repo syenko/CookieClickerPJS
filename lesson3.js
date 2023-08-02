@@ -91,11 +91,15 @@ var grandma = new StoreItem(
     }
 );
 
+// Day 3 - Call the purchase function!
+clicker.purchase();
+grandma.purchase();
+
 // ----------- Built Ins --------------
 var draw = function () {
     background(255, 255, 255);
 
-    // Day 1 optional - decrease size of cookie when mouse or key is pressed
+    // Day 2 - decrease size of cookie when mouse or key is pressed
     if (
         (mouseIsPressed || (keyIsPressed && str(key) === " ")) &&
         cookie.isTouching()
@@ -120,7 +124,7 @@ var draw = function () {
 
 // Day 1: When you click the cookie, increment a variable
 var mouseClicked = function () {
-    // Use dist function to check if the cookie was clicked
+    // Day 2: Check if the cookie was clicked
     if (cookie.isTouching()) {
         cookie.cookies += cookie.cpc;
     }
