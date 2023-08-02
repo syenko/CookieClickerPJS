@@ -25,8 +25,8 @@ var cookie = {
 var Button = function (x, y, width, height, label) {
     this.x = x;
     this.y = y;
-    this.width = width || 85;
-    this.height = height || 75;
+    this.width = width;
+    this.height = height;
     this.label = label;
 };
 // draws the button
@@ -109,17 +109,9 @@ var grandma = new StoreItem("grandma", "CPS +8", 100, function () {
 });
 
 // Day 4 - Create instances of Button object
-var clickerButton = new Button({
-    x: 20,
-    y: 64,
-    label: "Clicker\n(CPC +1)",
-});
+var clickerButton = new Button(20, 64, 85, 75, "Clicker\n(CPC +1)");
 
-var grandmaButton = new Button({
-    x: 20,
-    y: 140,
-    label: "Grandma\n(CPS +8)",
-});
+var grandmaButton = new Button(20, 140, 85, 75, "Grandma\n(CPS +8)");
 
 // ----------- Built Ins --------------
 var draw = function () {
