@@ -51,15 +51,10 @@ var draw = function () {
 
 // Day 1: When you click the cookie, increment a variable
 var mouseClicked = function () {
-    // Use dist function to check if the cookie was clicked
-    if (dist(x, y, mouseX, mouseY) < 100 * sz) {
-        cookies += cpc;
-    }
+    cookies += cpc;
 };
 
 // Day 1: When you press the spacebar and the mouse is over the cookies -> count as a click
 var keyPressed = function () {
-    if (str(key) === " " && dist(x, y, mouseX, mouseY) < 100 * sz) {
-        cookies += cpc;
-    }
+    cookies += cpc;
 };
