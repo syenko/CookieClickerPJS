@@ -1,8 +1,6 @@
 /**
 
-    Cookie Clicker - Lesson 4A
-
-    BEFORE buttons are added to StoreItem
+    Cookie Clicker - Lesson 4
 
 **/
 
@@ -24,12 +22,12 @@ var cookie = {
 };
 
 // Day 4: Define Button object
-var Button = function (config) {
-    this.x = config.x;
-    this.y = config.y;
-    this.width = config.width || 85;
-    this.height = config.height || 75;
-    this.label = config.label;
+var Button = function (x, y, width, height, label) {
+    this.x = x;
+    this.y = y;
+    this.width = width || 85;
+    this.height = height || 75;
+    this.label = label;
 };
 // draws the button
 Button.prototype.draw = function () {
