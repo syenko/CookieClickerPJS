@@ -109,8 +109,14 @@ var grandma = new StoreItem("grandma", "CPS +8", 100, function () {
 });
 
 // Day 4 - Create instances of Button object
-var clickerButton = new Button(20, 64, 85, 75, "Clicker\n(CPC +1)");
-var grandmaButton = new Button(20, 140, 85, 75, "Grandma\n(CPS +8)");
+var clickerButton = new Button(20, 95, 85, 70, "Clicker\n(CPC +1)\n15 cookies");
+var grandmaButton = new Button(
+    20,
+    170,
+    85,
+    70,
+    "Grandma\n(CPS +8)\n100 cookies"
+);
 
 // Day 5 - Create array of Buttons
 var buttons = [clickerButton, grandmaButton];
@@ -144,6 +150,8 @@ var draw = function () {
 
         fill(0, 0, 0);
         text("Cookies: " + cookie.cookies, 20, 30);
+        text("Cookies per click: " + cookie.cpc, 20, 50);
+        text("Cookies per second: " + cookie.cps, 20, 70);
 
         // Day 1 - draw the cookie
         drawCookie(cookie.x, cookie.y, cookie.sz);
