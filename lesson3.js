@@ -111,6 +111,8 @@ var draw = function () {
 
     fill(0, 0, 0);
     text("Cookies: " + cookie.cookies, 20, 30);
+    text("Cookies per click: " + cookie.cpc, 20, 50);
+    text("Cookies per second: " + cookie.cps, 20, 70);
 
     // Day 1 - draw the cookie
     drawCookie(cookie.x, cookie.y, cookie.sz);
